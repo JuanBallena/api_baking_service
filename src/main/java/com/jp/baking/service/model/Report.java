@@ -7,8 +7,8 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class Preference {
+public class Report {
 
-	private String name;
-	private Object data;
+	private String description;
+	private int quantity;
 }

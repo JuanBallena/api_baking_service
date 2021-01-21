@@ -28,12 +28,10 @@ public class Activity {
 	private static final String COLUMN_ID = "Activity_Id";
 	private static final String COLUMN_DESCRIPTION = "Activity_Description";
 	private static final String COLUMN_DATE = "Activity_Date";
-	private static final String COLUMN_FINISHED = "Activity_Finished";
 	
 	public static final String ID_ACTIVITY_PROPERTY = "idActivity";
 	public static final String DESCRIPTION_PROPERTY = "description";
 	public static final String DATE_PROPERTY = "date";
-	public static final String FINISHED_PROPERTY = "finished";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,8 +43,4 @@ public class Activity {
 	
 	@Column(name = COLUMN_DATE)
 	private String date;
-	
-	@Column(name = COLUMN_FINISHED, insertable = false)
-	private Boolean finished;
-	
 }

@@ -19,7 +19,6 @@ import com.jp.baking.service.dto.bakeTicket.BakeTicketDto;
 import com.jp.baking.service.dto.bakeTicket.CreateBakeTicketAndCustomerDto;
 import com.jp.baking.service.dto.bakeTicket.CreateBakeTicketDto;
 import com.jp.baking.service.dto.bakeTicket.UpdateBakeTicketBakingStatusDto;
-import com.jp.baking.service.dto.bakeTicket.UpdateBakeTicketCustomerDto;
 import com.jp.baking.service.dto.bakeTicket.UpdateBakeTicketDto;
 import com.jp.baking.service.error.ErrorMessageCreator;
 import com.jp.baking.service.interf.Dto;
@@ -182,42 +181,6 @@ public class BakeTicketController {
 	
 	@PutMapping("/bake-tickets/{idBakeTicket}")
 	public ServiceResponse updateBakeTicket(@PathVariable("idBakeTicket") Long idBakeTicket, @RequestBody UpdateBakeTicketDto dto) {
-		
-		ServiceResponse serviceResponse = new ServiceResponse();
-		
-		try {
-			serviceResponse.setType(BAKE_TICKET);
-			
-			Set<ConstraintViolation<Dto>> violations = validator.validate(dto);
-
-			if (violations.isEmpty()) {
-				
-				BakeTicketDto bakeTicketDto = bakeTicketManager.update(dto);
-				
-				if (bakeTicketDto == null) {
-					serviceResponse.addResponseNoContent();
-					serviceResponse.setData(bakeTicketDto);
-					return serviceResponse;
-				}
-				
-				serviceResponse.addResponseCreated();
-				serviceResponse.setData(bakeTicketDto);
-				return serviceResponse;
-			}
-			
-			serviceResponse.addResponseBadRequest();
-			serviceResponse.setErrorsMessage(ErrorMessageCreator.create(violations));
-			return serviceResponse;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return serviceResponse;
-	}
-	
-	@PutMapping("/bake-tickets/{idBakeTicket}/customer")
-	public ServiceResponse updateBakeTicketCustomer(@PathVariable("idBakeTicket") Long idBakeTicket, @RequestBody UpdateBakeTicketCustomerDto dto) {
 		
 		ServiceResponse serviceResponse = new ServiceResponse();
 		

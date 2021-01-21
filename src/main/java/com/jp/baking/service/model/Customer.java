@@ -27,13 +27,9 @@ public class Customer {
 	
 	private static final String COLUMN_ID = "Customer_Id";
 	private static final String COLUMN_NAME = "Customer_Name";
-	private static final String COLUMN_DOCUMENT = "Customer_Document";
-	private static final String COLUMN_PHONE = "Customer_Phone";
 	
 	public static final String ID_CUSTOMER_PROPERTY = "idCustomer";
 	public static final String NAME_PROPERTY = "name";
-	public static final String DOCUMENT_PROPERTY = "document";
-	public static final String PHONE_PROPERTY = "phone";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,10 +38,4 @@ public class Customer {
 	
 	@Column(name = COLUMN_NAME)
 	private String name;
-	
-	@Column(name = COLUMN_DOCUMENT)
-	private String document;
-	
-	@Column(name = COLUMN_PHONE)
-	private String phone;
 }

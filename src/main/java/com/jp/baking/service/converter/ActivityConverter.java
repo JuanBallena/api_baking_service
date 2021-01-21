@@ -17,7 +17,6 @@ public class ActivityConverter {
 				.id(activity.getIdActivity())
 				.description(activity.getDescription())
 				.date(activity.getDate())
-				.finished(activity.getFinished())
 				.build();
 	}
 	

@@ -11,7 +11,6 @@ import com.jp.baking.service.dto.bakeTicket.BakeTicketDto;
 import com.jp.baking.service.dto.bakeTicket.CreateBakeTicketAndCustomerDto;
 import com.jp.baking.service.dto.bakeTicket.CreateBakeTicketDto;
 import com.jp.baking.service.dto.bakeTicket.UpdateBakeTicketBakingStatusDto;
-import com.jp.baking.service.dto.bakeTicket.UpdateBakeTicketCustomerDto;
 import com.jp.baking.service.dto.bakeTicket.UpdateBakeTicketDto;
 import com.jp.baking.service.model.Activity;
 import com.jp.baking.service.model.BakeTicket;
@@ -123,19 +122,19 @@ public class BakeTicketManager {
 	
 	private ListResponse toListResponse(Page<BakeTicket> bakeTicketPage) {
 		
-		List<BakeTicketDto> list = bakeTicketConverter.toBakeTicketDtoList(bakeTicketPage.getContent());
+		List<BakeTicketDto> bakeTicketDtoList = bakeTicketConverter.toBakeTicketDtoList(bakeTicketPage.getContent());
 		return ListResponse.builder()
-				.list(list)
+				.list(bakeTicketDtoList)
 				.totalPages(bakeTicketPage.getTotalPages())
 				.build();
 	}
 	
 	private ListResponse toListResponse(List<BakeTicket> bakeTicketList) {
 		
-		List<BakeTicketDto> list = bakeTicketConverter.toBakeTicketDtoList(bakeTicketList);
+		List<BakeTicketDto> bakeTicketDtoList = bakeTicketConverter.toBakeTicketDtoList(bakeTicketList);
 		return ListResponse.builder()
-				.list(list)
-				.totalPages(list.size() == 0 ? 0 : 1)
+				.list(bakeTicketDtoList)
+				.totalPages(bakeTicketDtoList.size() == 0 ? 0 : 1)
 				.build();
 	}
 	
@@ -163,6 +162,7 @@ public class BakeTicketManager {
 		bakeTicket.setActivity(Activity.builder().idActivity(dto.getIdActivity()).build());
 		bakeTicket.setPlaceAttention(PlaceAttention.builder().idPlaceAttention(dto.getIdPlaceAttention()).build());
 		bakeTicket.setNumberAttention(this.replaceNumberAttention(dto.getNumberAttention()));
+		bakeTicket.setNumberBaked(dto.getNumberBaked());
 		bakeTicketRepository.save(bakeTicket);
 		bakeTicketRepository.refresh(bakeTicket);
 		
@@ -173,8 +173,6 @@ public class BakeTicketManager {
 		
 		Customer customer = new Customer();
 		customer.setName(dto.getName());
-		customer.setDocument(dto.getDocument());
-		customer.setPhone(dto.getPhone());
 		customerRepository.save(customer);
 		customerRepository.refresh(customer);
 		
@@ -183,6 +181,7 @@ public class BakeTicketManager {
 		bakeTicket.setActivity(Activity.builder().idActivity(dto.getIdActivity()).build());
 		bakeTicket.setPlaceAttention(PlaceAttention.builder().idPlaceAttention(dto.getIdPlaceAttention()).build());
 		bakeTicket.setNumberAttention(this.replaceNumberAttention(dto.getNumberAttention()));
+		bakeTicket.setNumberBaked(dto.getNumberBaked());
 		bakeTicketRepository.save(bakeTicket);
 		bakeTicketRepository.refresh(bakeTicket);
 		
@@ -201,28 +200,7 @@ public class BakeTicketManager {
 		bakeTicket.setActivity(Activity.builder().idActivity(dto.getIdActivity()).build());
 		bakeTicket.setPlaceAttention(PlaceAttention.builder().idPlaceAttention(dto.getIdPlaceAttention()).build());
 		bakeTicket.setNumberAttention(this.replaceNumberAttention(dto.getNumberAttention()));
-		bakeTicketRepository.save(bakeTicket);
-		bakeTicketRepository.refresh(bakeTicket);
-		
-		return bakeTicketConverter.toBakeTicketDto(bakeTicket);
-	}
-	
-	public BakeTicketDto update(UpdateBakeTicketCustomerDto dto) {
-		
-		if (validator.notPositiveNumber(dto.getIdBakeTicket())) return null;
-		
-		BakeTicket bakeTicket = bakeTicketRepository.findByIdBakeTicket(dto.getIdBakeTicket());
-		
-		if (validator.isNull(bakeTicket)) return null;
-		
-		Customer customer = new Customer();
-		customer.setName(dto.getName());
-		customer.setDocument(dto.getDocument());
-		customer.setPhone(dto.getPhone());
-		customerRepository.save(customer);
-		customerRepository.refresh(customer);
-		
-		bakeTicket.setCustomer(customer);
+		bakeTicket.setNumberBaked(dto.getNumberBaked());
 		bakeTicketRepository.save(bakeTicket);
 		bakeTicketRepository.refresh(bakeTicket);
 		
@@ -264,5 +242,32 @@ public class BakeTicketManager {
 		if (validator.notNull(bakeTicket)) return bakeTicket.getIdBakeTicket().equals(id);
 		
 		return true;
+	}
+	
+	public int totalBakeTicktesAccordingToActivityAndBakingStatus(Long idActivity, Long idParameter) {
+		
+		List<BakeTicket> bakeTicketList = bakeTicketRepository.findByActivityAndBakingStatus(
+				Activity.builder().idActivity(idActivity).build(), Parameter.builder().idParameter(idParameter).build());
+
+		return bakeTicketList.size();
+	}
+	
+	public int totalBakeTicketsAccordingToActivity(Long idActivity) {
+		
+		List<BakeTicket> bakeTicketList = bakeTicketRepository.findByActivity(Activity.builder().idActivity(idActivity).build());
+
+		return bakeTicketList.size();
+	}
+	
+	public int totalBakesAccordingToActivity(Long idActivity) {
+		
+		int totalBakes = 0;
+		List<BakeTicket> bakeTicketList = bakeTicketRepository.findByActivity(Activity.builder().idActivity(idActivity).build());
+		
+		for (BakeTicket bakeTicket : bakeTicketList) {
+			totalBakes += bakeTicket.getNumberBaked();
+		}
+		
+		return totalBakes;
 	}
 }

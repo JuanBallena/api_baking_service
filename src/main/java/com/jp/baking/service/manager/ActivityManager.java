@@ -119,7 +119,6 @@ public class ActivityManager implements UniqueDataValidator {
 		
 		activity.setDescription(dto.getDescription());
 		activity.setDate(dto.getDate());
-		activity.setFinished(dto.getFinished());
 		activityRepository.save(activity);
 		activityRepository.refresh(activity);
 		return activityConverter.toActivityDto(activity);

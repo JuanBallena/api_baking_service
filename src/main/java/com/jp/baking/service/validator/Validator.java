@@ -4,11 +4,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.google.common.base.Strings;
+
 @Component
 public class Validator {
 	
 	public Boolean hasText(String text) {
-		return !text.isEmpty() && !text.isBlank();
+		return !Strings.isNullOrEmpty(text);
+//		return !text.isEmpty() && !text.isBlank();
 	}
 	
 	public Boolean hasData(List<?> list) {
@@ -19,16 +22,20 @@ public class Validator {
 		return number > 0;
 	}
 	
+	public Boolean positiveNumber(Integer number) {
+		return number > 0;
+	}
+	
+	public Boolean positiveNumber(int number) {
+		return number > 0;
+	}
+	
 	public Boolean numberGreatherThanOne(Long number) {
 		return number > 1;
 	}
 	
 	public Boolean notPositiveNumber(Long number) {
 		return number < 1;
-	}
-	
-	public Boolean positiveNumber(int number) {
-		return number > 0;
 	}
 	
 	public Boolean positiveNumberOrCero(int number) {

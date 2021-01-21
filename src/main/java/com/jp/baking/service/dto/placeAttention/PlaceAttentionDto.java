@@ -11,5 +11,4 @@ public class PlaceAttentionDto {
 
 	private Long id;
 	private String name;
-	private String abbreviation;
 }

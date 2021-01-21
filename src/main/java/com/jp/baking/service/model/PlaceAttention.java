@@ -27,7 +27,6 @@ public class PlaceAttention {
 	
 	private static final String COLUMN_ID = "PlaceAttention_Id";
 	private static final String COLUMN_NAME = "PlaceAttention_Name";
-	private static final String COLUMN_ABBREVIATION = "PlaceAttention_Abbreviation";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +35,4 @@ public class PlaceAttention {
 	
 	@Column(name = COLUMN_NAME)
 	private String name;
-	
-	@Column(name = COLUMN_ABBREVIATION)
-	private String abbreviation;
 }

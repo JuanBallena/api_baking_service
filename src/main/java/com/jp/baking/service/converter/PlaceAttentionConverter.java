@@ -16,7 +16,6 @@ public class PlaceAttentionConverter {
 		return PlaceAttentionDto.builder()
 				.id(placeAttention.getIdPlaceAttention())
 				.name(placeAttention.getName())
-				.abbreviation(placeAttention.getAbbreviation())
 				.build();
 	}
 	

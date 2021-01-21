@@ -1,4 +1,4 @@
-package com.jp.baking.service.dto.activity;
+package com.jp.baking.service.dto.report;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,9 +7,8 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class ActivityDto {
+public class ReportDto {
 
-	private Long id;
 	private String description;
-	private String date;
+	private int quantity;
 }

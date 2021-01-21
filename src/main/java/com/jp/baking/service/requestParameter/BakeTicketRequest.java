@@ -25,6 +25,7 @@ public class BakeTicketRequest {
 	private Long idPlaceAttention;
 	private Long idBakingStatus;
 	private String numberAttention;
+	private Integer numberBaked;
 	private String sort;
 	private String direction;
 	private int size;
@@ -36,6 +37,7 @@ public class BakeTicketRequest {
 		this.idPlaceAttention = 0L;
 		this.idBakingStatus = 0L;
 		this.numberAttention = "";
+		this.numberBaked = 0;
 		this.sort = "";
 		this.direction = "";
 		this.size = 0;
@@ -62,6 +64,10 @@ public class BakeTicketRequest {
 		return validator.hasText(this.numberAttention);
 	}
 	
+	public Boolean positiveNumberBakedParameter() {
+		return validator.positiveNumber(this.numberBaked);
+	}
+	
 	public Boolean sizeParameterPositiveNumber() {
 		return validator.positiveNumber(this.size);
 	}
@@ -79,7 +85,8 @@ public class BakeTicketRequest {
 				this.positiveIdActivityParameter() ||
 				this.positiveIdPlaceAttentionParameter() ||
 				this.positiveIdBakingStatusParameter() ||
-				this.numberAttentionParameterHasText();
+				this.numberAttentionParameterHasText() ||
+				this.positiveNumberBakedParameter();
 	}
 	
 	public Boolean hasSortParameters() {
@@ -126,6 +133,9 @@ public class BakeTicketRequest {
 		
 		if (this.positiveIdBakingStatusParameter())
 			filterParameters.add(new FilterParameter(BakeTicket.BAKING_STATUS_PROPERTY, this.idBakingStatus));
+		
+		if (this.positiveNumberBakedParameter())
+			filterParameters.add(new FilterParameter(BakeTicket.NUMBER_BAKED_PROPERTY, this.numberBaked));
 		
 		
 		filterSpecification.addFilters(filterParameters);

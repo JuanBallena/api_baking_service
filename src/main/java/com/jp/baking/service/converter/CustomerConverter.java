@@ -16,8 +16,6 @@ public class CustomerConverter {
 		return CustomerDto.builder()
 				.id(customer.getIdCustomer())
 				.name(customer.getName())
-				.document(customer.getDocument())
-				.phone(customer.getPhone())
 				.build();
 	}
 	

@@ -22,7 +22,6 @@ public class ActivityRequest {
 
 	private String description;
 	private String date;
-	private Boolean finished;
 	private String sort;
 	private String direction;
 	private int size;
@@ -32,7 +31,6 @@ public class ActivityRequest {
 	{
 		this.description = "";
 		this.date = "";
-		this.finished = null;
 		this.sort = "";
 		this.direction = "";
 		this.page = 0;
@@ -45,10 +43,6 @@ public class ActivityRequest {
 	
 	public Boolean dateParameterHasText() {
 		return validator.hasText(this.date);
-	}
-	
-	public Boolean finishedParameterNotNull() {
-		return validator.notNull(this.finished);
 	}
 	
 	public Boolean sizeParameterPositiveNumber() {
@@ -65,8 +59,7 @@ public class ActivityRequest {
 	
 	public Boolean hasFilterParameters() {
 		return this.descriptionParameterHasText() ||
-				this.dateParameterHasText() ||
-				this.finishedParameterNotNull();
+				this.dateParameterHasText();
 	}
 	
 	public Boolean hasSortParameters() {
@@ -104,9 +97,6 @@ public class ActivityRequest {
 		
 		if (this.dateParameterHasText())
 			filterParameters.add(new FilterParameter(Activity.DATE_PROPERTY, this.date));
-		
-		if (this.finishedParameterNotNull())
-			filterParameters.add(new FilterParameter(Activity.FINISHED_PROPERTY, this.finished));
 		
 		filterSpecification.addFilters(filterParameters);
 		

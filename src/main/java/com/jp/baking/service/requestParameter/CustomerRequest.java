@@ -21,8 +21,6 @@ public class CustomerRequest {
 	private Validator validator = new Validator();
 
 	private String name;
-	private String document;
-	private String phone;
 	private String sort;
 	private String direction;
 	private int size;
@@ -31,8 +29,6 @@ public class CustomerRequest {
 	public CustomerRequest()
 	{
 		this.name = "";
-		this.document = "";
-		this.phone = "";
 		this.sort = "";
 		this.direction = "";
 		this.page = 0;
@@ -41,14 +37,6 @@ public class CustomerRequest {
 	
 	public Boolean nameParameterHasText() {
 		return validator.hasText(this.name);
-	}
-	
-	public Boolean documentParameterHasText() {
-		return validator.hasText(this.document);
-	}
-	
-	public Boolean phoneParameterHasText() {
-		return validator.hasText(this.phone);
 	}
 	
 	public Boolean sizeParameterPositiveNumber() {
@@ -64,9 +52,7 @@ public class CustomerRequest {
 	}
 	
 	public Boolean hasFilterParameters() {
-		return this.nameParameterHasText() ||
-				this.documentParameterHasText() ||
-				this.phoneParameterHasText();
+		return this.nameParameterHasText();
 	}
 	
 	public Boolean hasSortParameters() {
@@ -101,12 +87,6 @@ public class CustomerRequest {
 		
 		if (this.nameParameterHasText()) 
 			filterParameters.add(new FilterParameter(Customer.NAME_PROPERTY, this.name));
-		
-		if (this.documentParameterHasText())
-			filterParameters.add(new FilterParameter(Customer.DOCUMENT_PROPERTY, this.document));
-		
-		if (this.phoneParameterHasText())
-			filterParameters.add(new FilterParameter(Customer.PHONE_PROPERTY, this.phone));
 		
 		filterSpecification.addFilters(filterParameters);
 		

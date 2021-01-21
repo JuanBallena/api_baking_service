@@ -33,10 +33,10 @@ public class ParameterManager {
 	
 	private ListResponse toListResponse(List<Parameter> list) {
 		
-		List<ParameterDto> customerList = parameterConverter.toParameterDtoList(list);
+		List<ParameterDto> parameterDtoList = parameterConverter.toParameterDtoList(list);
 		return ListResponse.builder()
-				.list(customerList)
-				.totalPages(customerList.size() == 0 ? 0 : 1)
+				.list(parameterDtoList)
+				.totalPages(parameterDtoList.size() == 0 ? 0 : 1)
 				.build();
 	}
 }

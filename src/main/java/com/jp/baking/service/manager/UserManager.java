@@ -5,15 +5,12 @@ import org.springframework.stereotype.Service;
 
 import com.jp.baking.service.auth.Security;
 import com.jp.baking.service.converter.UserConverter;
-import com.jp.baking.service.definition.SettingDefinition;
 import com.jp.baking.service.dto.user.AuthenticatedUserDto;
 import com.jp.baking.service.dto.user.CreateUserDto;
 import com.jp.baking.service.dto.user.CredentialsDto;
 import com.jp.baking.service.dto.user.UserDto;
 import com.jp.baking.service.interf.UniqueDataValidator;
-import com.jp.baking.service.model.Setting;
 import com.jp.baking.service.model.User;
-import com.jp.baking.service.repository.SettingRepository;
 import com.jp.baking.service.repository.UserRepository;
 import com.jp.baking.service.validator.Validator;
 
@@ -29,7 +26,10 @@ public class UserManager implements UniqueDataValidator {
 	private UserConverter userConverter;
 	
 	@Autowired
-	private SettingRepository settingRepository;
+	private SettingManager settingManager;
+	
+	@Autowired
+	private ActivityManager activityManager;
 	
 	
 	public UserDto save(CreateUserDto dto) {
@@ -51,11 +51,9 @@ public class UserManager implements UniqueDataValidator {
 		
 		if (validator.isNull(user)) return null;
 		
-		Setting setting = settingRepository.findByIdSetting(SettingDefinition.ID_SEETING_CURRENT_ACTIVITY);
-		
 		return AuthenticatedUserDto.builder()
 				.username(user.getUsername())
-				.currentActivity(setting.getValue())
+				.currentActivity(activityManager.findById(settingManager.currentActivityValue()))
 				.build();
 	}
 	

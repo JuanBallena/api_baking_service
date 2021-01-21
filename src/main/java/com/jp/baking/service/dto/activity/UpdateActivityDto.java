@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jp.baking.service.annotation.TrueOrFalse;
 import com.jp.baking.service.annotation.UniqueToUpdate;
 import com.jp.baking.service.definition.MessageDefinition;
 import com.jp.baking.service.interf.Dto;
@@ -43,10 +42,6 @@ public class UpdateActivityDto implements Dto {
 	@NotEmpty(groups = SecondValidation.class)
 	private String date;
 	
-	@NotNull
-	@TrueOrFalse(groups = SecondValidation.class)
-	private Boolean finished;
-	
 	@UniqueToUpdate(
 		property = Activity.DESCRIPTION_PROPERTY, 
 		manager = ActivityManager.class, 
@@ -70,7 +65,6 @@ public class UpdateActivityDto implements Dto {
 		idActivity  = (Integer) data.get("idActivity");
 		description = (String)  data.get("description");
 		date        = (String)  data.get("date");
-		finished    = (Boolean) data.get("finished");
 	}
 	
 	public Long getIdActivity() {

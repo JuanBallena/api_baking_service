@@ -32,10 +32,10 @@ public class PlaceAttentionManager {
 	
 	public ListResponse toListResponse(List<PlaceAttention> placeAttentionList) {
 		
-		List<PlaceAttentionDto> list = placeAttentionConverter.toPlaceAttentionDtoList(placeAttentionList);
+		List<PlaceAttentionDto> placeAttentionDtoList = placeAttentionConverter.toPlaceAttentionDtoList(placeAttentionList);
 		return ListResponse.builder()
-				.list(list)
-				.totalPages(list.size() == 0 ? 0 : 1)
+				.list(placeAttentionDtoList)
+				.totalPages(placeAttentionDtoList.size() == 0 ? 0 : 1)
 				.build();
 	}
 	
@@ -48,7 +48,6 @@ public class PlaceAttentionManager {
 		if (validator.isNull(placeAttention)) return null;
 		
 		placeAttention.setName(dto.getName());
-		placeAttention.setAbbreviation(dto.getAbbreviation());
 		placeAttentionRepository.save(placeAttention);
 		placeAttentionRepository.refresh(placeAttention);
 		

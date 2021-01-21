@@ -50,6 +50,14 @@ public class CreateBakeTicketDto implements Dto {
 	private String numberAttention;
 	
 	@NotNull
+	@NotBlank(groups = SecondValidation.class)
+	@Pattern(
+		regexp = RegexDefinition.ONLY_NUMBERS, 
+		message = MessageDefinition.ONLY_NUMBERS, 
+		groups = FourthValidation.class)
+	private String numberBaked;
+	
+	@NotNull
 	@Positive(groups = SecondValidation.class)
 	private Integer idPlaceAttention;
 	
@@ -73,6 +81,7 @@ public class CreateBakeTicketDto implements Dto {
 		idCustomer       = (Integer) data.get("idCustomer");
 		idActivity       = (Integer) data.get("idActivity");
 		numberAttention  = (String)  data.get("numberAttention");
+		numberBaked      = (String)  data.get("numberBaked");
 		idPlaceAttention = (Integer) data.get("idPlaceAttention");
 	}
 	
@@ -86,5 +95,9 @@ public class CreateBakeTicketDto implements Dto {
 	
 	public Long getIdPlaceAttention() {
 		return Long.valueOf(this.idPlaceAttention);
+	}
+	
+	public Integer getNumberBaked() {
+		return Integer.parseInt(this.numberBaked);
 	}
 }

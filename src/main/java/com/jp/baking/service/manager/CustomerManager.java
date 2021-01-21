@@ -10,7 +10,6 @@ import com.jp.baking.service.converter.CustomerConverter;
 import com.jp.baking.service.dto.customer.CreateCustomerDto;
 import com.jp.baking.service.dto.customer.CustomerDto;
 import com.jp.baking.service.dto.customer.UpdateCustomerDto;
-import com.jp.baking.service.interf.UniqueDataValidator;
 import com.jp.baking.service.model.Customer;
 import com.jp.baking.service.repository.CustomerRepository;
 import com.jp.baking.service.requestParameter.CustomerRequest;
@@ -18,7 +17,7 @@ import com.jp.baking.service.response.ListResponse;
 import com.jp.baking.service.validator.Validator;
 
 @Service
-public class CustomerManager implements UniqueDataValidator {
+public class CustomerManager {
 	
 	private Validator validator = new Validator();
 	
@@ -71,19 +70,19 @@ public class CustomerManager implements UniqueDataValidator {
 	
 	private ListResponse toListResponse(Page<Customer> page) {
 		
-		List<CustomerDto> customerList = customerConverter.toCustomerDtoList(page.getContent());
+		List<CustomerDto> customerDtoList = customerConverter.toCustomerDtoList(page.getContent());
 		return ListResponse.builder()
-				.list(customerList)
+				.list(customerDtoList)
 				.totalPages(page.getTotalPages())
 				.build();
 	}
 	
 	private ListResponse toListResponse(List<Customer> list) {
 		
-		List<CustomerDto> customerList = customerConverter.toCustomerDtoList(list);
+		List<CustomerDto> customerDtoList = customerConverter.toCustomerDtoList(list);
 		return ListResponse.builder()
-				.list(customerList)
-				.totalPages(customerList.size() == 0 ? 0 : 1)
+				.list(customerDtoList)
+				.totalPages(customerDtoList.size() == 0 ? 0 : 1)
 				.build();
 	}
 	
@@ -98,8 +97,6 @@ public class CustomerManager implements UniqueDataValidator {
 		
 		Customer customer = new Customer();
 		customer.setName(dto.getName());
-		customer.setDocument(dto.getDocument());
-		customer.setPhone(dto.getPhone());
 		customerRepository.save(customer);
 		customerRepository.refresh(customer);
 		
@@ -115,36 +112,9 @@ public class CustomerManager implements UniqueDataValidator {
 		if (validator.isNull(customer)) return null;
 		
 		customer.setName(dto.getName());
-		customer.setDocument(dto.getDocument());
-		customer.setPhone(dto.getPhone());
 		customerRepository.save(customer);
 		customerRepository.refresh(customer);
 		
 		return customerConverter.toCustomerDto(customer); 
-	}
-	
-	private Customer findCustomer(String property, Object value) {
-		
-		switch (property) {
-			case Customer.DOCUMENT_PROPERTY: return customerRepository.findByDocument(value.toString());
-			default: 						 return null;
-		}
-	}
-
-	@Override
-	public boolean uniqueToCreate(String property, Object value) {
-		
-		Customer customer = this.findCustomer(property, value);
-		return validator.isNull(customer);
-	}
-
-	@Override
-	public boolean uniqueToUpdate(String property, Object value, Long id) {
-		
-		Customer customer = this.findCustomer(property, value);
-		
-		if (validator.notNull(customer)) return customer.getIdCustomer().equals(id);
-		
-		return true;
 	}
 }

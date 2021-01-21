@@ -31,6 +31,7 @@ public class BakeTicket {
 	private static final String COLUMN_ID_CUSTOMER = "BakeTicket_IdCustomer";
 	private static final String COLUMN_ID_ACTIVITY = "BakeTicket_IdActivity";
 	private static final String COLUMN_NUMBER_ATTENTION = "BakeTicket_NumberAttention";
+	private static final String COLUMN_NUMBER_BAKED = "BakeTicket_NumberBaked";
 	private static final String COLUMN_ID_PLACE_ATTENTION = "BakeTicket_IdPlaceAttention";
 	private static final String COLUMN_BAKING_STATUS = "BakeTicket_IdBakingStatus";
 	
@@ -38,6 +39,7 @@ public class BakeTicket {
 	public static final String CUSTOMER_PROPERTY = "customer";
 	public static final String ACTIVITY_PROPERTY = "activity";
 	public static final String NUMBER_ATTENTION_PROPERTY = "numberAttention";
+	public static final String NUMBER_BAKED_PROPERTY = "numberBaked";
 	public static final String PLACE_ATTENTION_PROPERTY = "placeAttention";
 	public static final String BAKING_STATUS_PROPERTY = "bakingStatus";
 
@@ -56,6 +58,9 @@ public class BakeTicket {
 	
 	@Column(name = COLUMN_NUMBER_ATTENTION)
 	private String numberAttention;
+	
+	@Column(name = COLUMN_NUMBER_BAKED)
+	private Integer numberBaked;
 	
 	@ManyToOne
 	@JoinColumn(name = COLUMN_ID_PLACE_ATTENTION)

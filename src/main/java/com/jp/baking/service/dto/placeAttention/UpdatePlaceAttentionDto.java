@@ -35,13 +35,6 @@ public class UpdatePlaceAttentionDto implements Dto {
 		groups = ThirdValidation.class)
 	private String name;
 	
-	@NotNull
-	@Size(
-		max = 10,
-		message = MessageDefinition.SIZE_OF_THE_PLACE_ATTENTION_ABBREVIATION,
-		groups = SecondValidation.class)
-	private String abbreviation;
-	
 	@SuppressWarnings("unchecked")
 	@JsonProperty("placeAttention")
 	@JsonIgnoreProperties(ignoreUnknown = true)
@@ -51,7 +44,6 @@ public class UpdatePlaceAttentionDto implements Dto {
 
 		idPlaceAttention = (Integer) data.get("idPlaceAttention");
 		name             = (String)  data.get("name");
-		abbreviation     = (String)  data.get("abbreviation");
 	}
 	
 	public Long getIdPlaceAttention() {

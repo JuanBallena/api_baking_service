@@ -18,6 +18,7 @@ public class BakeTicketDto {
 	private CustomerDto customer;
 	private ActivityDto activity;
 	private String numberAttention;
+	private Integer numberBaked;
 	private PlaceAttentionDto placeAttention;
 	private ParameterDto bakingStatus;
 }

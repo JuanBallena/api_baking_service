@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jp.baking.service.converter.SettingConverter;
+import com.jp.baking.service.definition.SettingDefinition;
 import com.jp.baking.service.dto.setting.SettingDto;
 import com.jp.baking.service.dto.setting.UpdateSettingValueDto;
 import com.jp.baking.service.model.Setting;
@@ -52,5 +53,11 @@ public class SettingManager {
 		settingRepository.refresh(setting);
 		
 		return settingConverter.toSettingDto(setting);
+	}
+	
+	public Long currentActivityValue() {
+		
+		Setting setting = settingRepository.findByIdSetting(SettingDefinition.ID_SEETING_CURRENT_ACTIVITY);
+		return setting.getValue();
 	}
 }
